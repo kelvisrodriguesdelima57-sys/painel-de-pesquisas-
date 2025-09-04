@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Configurações Black Box</title>
+        <link rel="stylesheet" href="style.css">
+        </head>
+        <body>
+          <header>
+              <div class="logo">⚙️ Configurações</div>
+                  <nav class="nav" id="navMenu">
+                        <a href="config.html">Configurações</a>
+                            </nav>
+                                <button class="menu-toggle" id="menuBtn">☰</button>
+                                  </header>
+
+                                    <main class="main-container">
+                                        <h1>Configurações</h1>
+                                            <div class="settings">
+                                                  <label>
+                                                          Tema:
+                                                                  <select id="themeSelect">
+                                                                            <option value="dark">Escuro</option>
+                                                                                      <option value="neon">Neon Animado</option>
+                                                                                              </select>
+                                                                                                    </label>
+
+                                                                                                          <label>
+                                                                                                                  Fundo animado:
+                                                                                                                          <input type="checkbox" id="bgToggle" checked>
+                                                                                                                                </label>
+
+                                                                                                                                      <label>
+                                                                                                                                              Pesquisa por voz:
+                                                                                                                                                      <input type="checkbox" id="voiceToggle" checked>
+                                                                                                                                                            </label>
+
+                                                                                                                                                                  <label>
+                                                                                                                                                                          Mecanismo de busca:
+                                                                                                                                                                                  <select id="engineSelect">
+                                                                                                                                                                                            <option value="google">Google</option>
+                                                                                                                                                                                                      <option value="bing">Bing</option>
+                                                                                                                                                                                                                <option value="duckduckgo">DuckDuckGo</option>
+                                                                                                                                                                                                                        </select>
+                                                                                                                                                                                                                              </label>
+
+                                                                                                                                                                                                                                    <button id="saveBtn">💾 Salvar</button>
+                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                          </main>
+
+                                                                                                                                                                                                                                            <script>
+                                                                                                                                                                                                                                                const menuBtn = document.getElementById("menuBtn");
+                                                                                                                                                                                                                                                    const navMenu = document.getElementById("navMenu");
+                                                                                                                                                                                                                                                        menuBtn.addEventListener("click", () => navMenu.classList.toggle("active"));
+
+                                                                                                                                                                                                                                                            const themeSelect = document.getElementById("themeSelect");
+                                                                                                                                                                                                                                                                const bgToggle = document.getElementById("bgToggle");
+                                                                                                                                                                                                                                                                    const voiceToggle = document.getElementById("voiceToggle");
+                                                                                                                                                                                                                                                                        const engineSelect = document.getElementById("engineSelect");
+                                                                                                                                                                                                                                                                            const saveBtn = document.getElementById("saveBtn");
+
+                                                                                                                                                                                                                                                                                window.onload = () => {
+                                                                                                                                                                                                                                                                                      if(localStorage.getItem("theme")) themeSelect.value = localStorage.getItem("theme");
+                                                                                                                                                                                                                                                                                            if(localStorage.getItem("bg") === "false") bgToggle.checked = false;
+                                                                                                                                                                                                                                                                                                  if(localStorage.getItem("voice") === "false") voiceToggle.checked = false;
+                                                                                                                                                                                                                                                                                                        if(localStorage.getItem("engine")) engineSelect.value = localStorage.getItem("engine");
+                                                                                                                                                                                                                                                                                                            };
+
+                                                                                                                                                                                                                                                                                                                saveBtn.addEventListener("click", () => {
+                                                                                                                                                                                                                                                                                                                      localStorage.setItem("theme", themeSelect.value);
+                                                                                                                                                                                                                                                                                                                            localStorage.setItem("bg", bgToggle.checked);
+                                                                                                                                                                                                                                                                                                                                  localStorage.setItem("voice", voiceToggle.checked);
+                                                                                                                                                                                                                                                                                                                                        localStorage.setItem("engine", engineSelect.value);
+                                                                                                                                                                                                                                                                                                                                              alert("✅ Configurações salvas!");
+                                                                                                                                                                                                                                                                                                                                                  });
+                                                                                                                                                                                                                                                                                                                                                    </script>
+                                                                                                                                                                                                                                                                                                                                                    </body>
+                                                                                                                                                                                                                                                                                                                                                    </html>

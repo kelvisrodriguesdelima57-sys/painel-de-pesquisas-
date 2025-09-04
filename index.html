@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Pesquisa Black Box</title>
+        <link rel="stylesheet" href="style.css">
+        </head>
+        <body>
+          <!-- MENU -->
+            <header>
+                <div class="logo">🔎 Black Box</div>
+                    <nav class="nav" id="navMenu">
+                          <a href="config.html">Configurações</a>
+                              </nav>
+                                  <button class="menu-toggle" id="menuBtn">☰</button>
+                                    </header>
+
+                                      <!-- ÁREA PRINCIPAL -->
+                                        <main class="main-container">
+                                            <h1>Faça sua pesquisa</h1>
+                                                <form id="searchForm" class="search-box">
+                                                      <input type="text" id="searchInput" placeholder="Digite ou fale...">
+                                                            <button type="button" id="voiceBtn" class="round-btn">🎤</button>
+                                                                  <button type="submit" class="round-btn">➤</button>
+                                                                      </form>
+                                                                        </main>
+
+                                                                          <script>
+                                                                              // MENU MOBILE
+                                                                                  const menuBtn = document.getElementById("menuBtn");
+                                                                                      const navMenu = document.getElementById("navMenu");
+                                                                                          menuBtn.addEventListener("click", () => {
+                                                                                                navMenu.classList.toggle("active");
+                                                                                                    });
+
+                                                                                                        // PESQUISA
+                                                                                                            const searchInput = document.getElementById("searchInput");
+                                                                                                                const searchForm = document.getElementById("searchForm");
+
+                                                                                                                    function pesquisar(query) {
+                                                                                                                          const engine = localStorage.getItem("engine") || "google";
+                                                                                                                                let url = "";
+                                                                                                                                      if(engine === "google") url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+                                                                                                                                            if(engine === "bing") url = `https://www.bing.com/search?q=${encodeURIComponent(query)}`;
+                                                                                                                                                  if(engine === "duckduckgo") url = `https://duckduckgo.com/?q=${encodeURIComponent(query)}`;
+                                                                                                                                                        window.open(url, "_blank");
+                                                                                                                                                            }
+
+                                                                                                                                                                searchForm.addEventListener("submit", (e) => {
+                                                                                                                                                                      e.preventDefault();
+                                                                                                                                                                            const query = searchInput.value.trim();
+                                                                                                                                                                                  if(query) {
+                                                                                                                                                                                          pesquisar(query);
+                                                                                                                                                                                                  searchInput.value = "";
+                                                                                                                                                                                                        }
+                                                                                                                                                                                                            });
+
+                                                                                                                                                                                                                // VOZ
+                                                                                                                                                                                                                    const voiceBtn = document.getElementById("voiceBtn");
+                                                                                                                                                                                                                        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                                                                                                                                                                                                                            if(SpeechRecognition) {
+                                                                                                                                                                                                                                  const recognition = new SpeechRecognition();
+                                                                                                                                                                                                                                        recognition.lang = "pt-BR";
+                                                                                                                                                                                                                                              recognition.continuous = false;
+
+                                                                                                                                                                                                                                                    voiceBtn.addEventListener("click", () => {
+                                                                                                                                                                                                                                                            recognition.start();
+                                                                                                                                                                                                                                                                    searchInput.placeholder = "🎙️ Ouvindo...";
+                                                                                                                                                                                                                                                                          });
+
+                                                                                                                                                                                                                                                                                recognition.onresult = (event) => {
+                                                                                                                                                                                                                                                                                        const voiceText = event.results[0][0].transcript;
+                                                                                                                                                                                                                                                                                                searchInput.placeholder = "Digite ou fale...";
+                                                                                                                                                                                                                                                                                                        pesquisar(voiceText);
+                                                                                                                                                                                                                                                                                                              };
+
+                                                                                                                                                                                                                                                                                                                    recognition.onerror = () => {
+                                                                                                                                                                                                                                                                                                                            searchInput.placeholder = "Erro ao ouvir. Tente novamente.";
+                                                                                                                                                                                                                                                                                                                                  };
+                                                                                                                                                                                                                                                                                                                                      }
+                                                                                                                                                                                                                                                                                                                                        </script>
+                                                                                                                                                                                                                                                                                                                                        </body>
+                                                                                                                                                                                                                                                                                                                                        </html>
