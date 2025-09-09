@@ -1,84 +1,70 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Pesquisa Black Box</title>
-        <link rel="stylesheet" href="style.css">
-        </head>
-        <body>
-          <!-- MENU -->
-            <header>
-                <div class="logo">🔎 Black Box</div>
-                    <nav class="nav" id="navMenu">
-                          <a href="config.html">Configurações</a>
-                              </nav>
-                                  <button class="menu-toggle" id="menuBtn">☰</button>
-                                    </header>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Site em Manutenção</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    background: #000;
+  }
 
-                                      <!-- ÁREA PRINCIPAL -->
-                                        <main class="main-container">
-                                            <h1>Faça sua pesquisa</h1>
-                                                <form id="searchForm" class="search-box">
-                                                      <input type="text" id="searchInput" placeholder="Digite ou fale...">
-                                                            <button type="button" id="voiceBtn" class="round-btn">🎤</button>
-                                                                  <button type="submit" class="round-btn">➤</button>
-                                                                      </form>
-                                                                        </main>
+  /* Fundo GIF hacker */
+  .bg-gif {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    opacity: 0.8;
+  }
 
-                                                                          <script>
-                                                                              // MENU MOBILE
-                                                                                  const menuBtn = document.getElementById("menuBtn");
-                                                                                      const navMenu = document.getElementById("navMenu");
-                                                                                          menuBtn.addEventListener("click", () => {
-                                                                                                navMenu.classList.toggle("active");
-                                                                                                    });
+  /* Aviso de manutenção grande e visível */
+  .update-notice {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ff0000;
+    color: #fff;
+    font-size: 28px;
+    font-weight: bold;
+    padding: 30px 50px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.7);
+    z-index: 1000;
+    animation: blink 1s linear infinite;
+    line-height: 1.5;
+  }
 
-                                                                                                        // PESQUISA
-                                                                                                            const searchInput = document.getElementById("searchInput");
-                                                                                                                const searchForm = document.getElementById("searchForm");
+  @keyframes blink {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0.5; }
+  }
 
-                                                                                                                    function pesquisar(query) {
-                                                                                                                          const engine = localStorage.getItem("engine") || "google";
-                                                                                                                                let url = "";
-                                                                                                                                      if(engine === "google") url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
-                                                                                                                                            if(engine === "bing") url = `https://www.bing.com/search?q=${encodeURIComponent(query)}`;
-                                                                                                                                                  if(engine === "duckduckgo") url = `https://duckduckgo.com/?q=${encodeURIComponent(query)}`;
-                                                                                                                                                        window.open(url, "_blank");
-                                                                                                                                                            }
+  /* Oculta conteúdo da interface */
+  header, footer, main {
+    display: none;
+  }
+</style>
+</head>
+<body>
 
-                                                                                                                                                                searchForm.addEventListener("submit", (e) => {
-                                                                                                                                                                      e.preventDefault();
-                                                                                                                                                                            const query = searchInput.value.trim();
-                                                                                                                                                                                  if(query) {
-                                                                                                                                                                                          pesquisar(query);
-                                                                                                                                                                                                  searchInput.value = "";
-                                                                                                                                                                                                        }
-                                                                                                                                                                                                            });
+<!-- Fundo hacker -->
+<img class="bg-gif" src="https://media3.giphy.com/media/v1.Y2lkPTZjMDliOTUyZmF5d3U2NTV6ZW1sZmJqZG05a2g4ZG84MGIxdmlxbmsxdnl6YTNlbyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/V4NSR1NG2p0KeJJyr5/giphy.gif" alt="Fundo Hacker">
 
-                                                                                                                                                                                                                // VOZ
-                                                                                                                                                                                                                    const voiceBtn = document.getElementById("voiceBtn");
-                                                                                                                                                                                                                        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-                                                                                                                                                                                                                            if(SpeechRecognition) {
-                                                                                                                                                                                                                                  const recognition = new SpeechRecognition();
-                                                                                                                                                                                                                                        recognition.lang = "pt-BR";
-                                                                                                                                                                                                                                              recognition.continuous = false;
+<!-- Aviso de manutenção -->
+<div class="update-notice">
+  ⚠️ SITE EM MANUTENÇÃO ⚠️<br>
+  Volta ao ar em breve!
+</div>
 
-                                                                                                                                                                                                                                                    voiceBtn.addEventListener("click", () => {
-                                                                                                                                                                                                                                                            recognition.start();
-                                                                                                                                                                                                                                                                    searchInput.placeholder = "🎙️ Ouvindo...";
-                                                                                                                                                                                                                                                                          });
-
-                                                                                                                                                                                                                                                                                recognition.onresult = (event) => {
-                                                                                                                                                                                                                                                                                        const voiceText = event.results[0][0].transcript;
-                                                                                                                                                                                                                                                                                                searchInput.placeholder = "Digite ou fale...";
-                                                                                                                                                                                                                                                                                                        pesquisar(voiceText);
-                                                                                                                                                                                                                                                                                                              };
-
-                                                                                                                                                                                                                                                                                                                    recognition.onerror = () => {
-                                                                                                                                                                                                                                                                                                                            searchInput.placeholder = "Erro ao ouvir. Tente novamente.";
-                                                                                                                                                                                                                                                                                                                                  };
-                                                                                                                                                                                                                                                                                                                                      }
-                                                                                                                                                                                                                                                                                                                                        </script>
-                                                                                                                                                                                                                                                                                                                                        </body>
-                                                                                                                                                                                                                                                                                                                                        </html>
+</body>
+</html>
