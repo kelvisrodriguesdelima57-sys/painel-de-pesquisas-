@@ -5,131 +5,84 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Site em Manutenção</title>
   <style>
-    body {
+    /* Reset */
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Fundo da página */
+    body {
+      background: #1a1a1a;
       font-family: Arial, sans-serif;
-      height: 100vh;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: #000;
-      overflow: hidden;
-    }
-
-    /* Fundo hacker */
-    .bg-gif {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -1;
-      opacity: 0.8;
-    }
-
-    /* Aviso de manutenção */
-    .update-notice {
-      background: #ff0000;
-      color: #fff;
-      font-size: 28px;
-      font-weight: bold;
-      padding: 25px 40px;
-      border-radius: 15px;
+      height: 100vh;
+      flex-direction: column;
       text-align: center;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.7);
-      animation: blink 1s linear infinite;
-      line-height: 1.5;
-      z-index: 2;
     }
 
-    @keyframes blink {
-      0%, 50%, 100% { opacity: 1; }
-      25%, 75% { opacity: 0.5; }
+    /* Container principal */
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    /* Contador regressivo */
-    .countdown {
-      margin-top: 20px;
-      background: rgba(0, 0, 0, 0.7);
-      color: #00ff00;
-      font-size: 24px;
+    /* Ícone de alerta */
+    .alert-icon {
+      width: 120px;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.8; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Texto do aviso */
+    .notice-text {
+      margin-top: 15px;
+      font-size: 26px;
       font-weight: bold;
-      padding: 15px 25px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px #00ff00;
-      font-family: "Courier New", monospace;
-      z-index: 2;
+      color: #fff;
     }
 
-    /* Bart andando de skate */
-    .bart-skate {
+    /* Palavra “MANUTENÇÃO” destacada */
+    .highlight {
+      color: #ff0000;
+    }
+
+    /* Engrenagens */
+    .gears {
       position: absolute;
-      bottom: 10px;
-      left: -200px;
-      width: 180px;
-      z-index: 3;
-      animation: skate 10s linear infinite;
+      bottom: 20px;
+      right: 20px;
+      width: 120px;
+      animation: rotate 5s linear infinite;
     }
 
-    /* Animação do Bart atravessando a tela */
-    @keyframes skate {
-      0% { left: -200px; }
-      100% { left: 100vw; }
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <!-- Ícone de alerta -->
+    <img class="alert-icon" src="https://cdn-icons-png.flaticon.com/512/564/564619.png" alt="Alerta" />
 
-  <!-- Fundo hacker -->
-  <img
-    class="bg-gif"
-    src="https://media3.giphy.com/media/v1.Y2lkPTZjMDliOTUybWJ5dTNncjF5MHBnaWdtZ2ppd2pjZXc1dGIzeDh1MjE1ZGU3ZTE5aCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/3oKIP9EDlZKKFX74S4/giphy.gif"
-    alt="Fundo Hacker"
-  />
-
-  <!-- Aviso de manutenção -->
-  <div class="update-notice">
-    ⚠️ SITE EM MANUTENÇÃO ⚠️<br />
-    Volta ao ar em breve!
+    <!-- Texto principal -->
+    <div class="notice-text">
+      SITE EM <span class="highlight">MANUTENÇÃO</span>
+    </div>
   </div>
 
-  <!-- Contador regressivo -->
-  <div class="countdown" id="countdown">
-    Calculando tempo...
-  </div>
-
-  <!-- Bart andando de skate -->
-  <img
-    class="bart-skate"
-    src="https://media3.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif"
-    alt="Bart andando de skate"
-  />
-
-  <script>
-    // Definir data de retorno do site
-    const returnDate = new Date();
-    returnDate.setMinutes(returnDate.getMinutes() + 30); // volta em 30 minutos
-
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const distance = returnDate - now;
-
-      if (distance <= 0) {
-        document.getElementById("countdown").innerHTML = "✅ O site voltou ao ar!";
-        return;
-      }
-
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      document.getElementById("countdown").innerHTML =
-        `⏳ Voltamos em: ${minutes}m ${seconds}s`;
-    }
-
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-  </script>
+  <!-- Engrenagens animadas -->
+  <img class="gears" src="https://cdn-icons-png.flaticon.com/512/1548/1548700.png" alt="Engrenagens" />
 </body>
 </html>
